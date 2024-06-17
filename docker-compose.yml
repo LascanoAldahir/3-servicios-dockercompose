@@ -1,0 +1,39 @@
+version: '3'
+services:
+  web:
+    image: nginx
+    container_name: servicio1
+    ports:
+      - "8084:80"
+    networks:
+      - red1
+  php:
+    image: phpmyadmin
+    container_name: servicio2
+    ports:
+      - "8085:80"
+
+  apache:
+    image: httpd
+    container_name: servicio3
+    ports:
+      - "8086:80"
+    networks:
+      - red1
+
+  pyhton1:
+    build:
+      context: ./servidor2
+      dockerfile: Dockerfile
+    container_name: servicio4
+    ports:
+      #puerto host puyesrto contenedor
+      - "8087:5002"
+    volumes:
+      #ruta host : ruta cantenedor
+      - ./datos:/app/data
+
+networks:
+  red1:
+volumes:
+  datos:
